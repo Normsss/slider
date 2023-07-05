@@ -223,14 +223,16 @@ var Slider = function () {
       var _this = this;
 
       window.addEventListener('resize', this.onDocumentResize.bind(this));
-      this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
-      this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
+      this.minHandler.addEventListener('click', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('click', this.controlmaxHandler.bind(this));
       this.inputs.forEach(function (input) {
         return input.addEventListener('keydown', _this.onInputKeydown.bind(_this));
       });
       this.inputs.forEach(function (input) {
         return input.addEventListener('keyup', _this.onInputKeyUp.bind(_this));
       });
+      this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
     }
   }, {
     key: 'setAriaDefaults',
@@ -350,11 +352,8 @@ var Slider = function () {
   }, {
     key: 'preventErasingSymbol',
     value: function preventErasingSymbol(e) {
-      console.log("here");
-
       var inputValue = e.target.value;
       if (!inputValue.startsWith('$')) {
-        console.log("here2");
         e.target.value = '$' + inputValue;
       }
     }
