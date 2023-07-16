@@ -233,6 +233,9 @@ var Slider = function () {
       });
       this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
+	    this.minHandler.addEventListener('touchstart', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('touchstart', this.controlmaxHandler.bind(this));
+	    
     }
   }, {
     key: 'setAriaDefaults',
