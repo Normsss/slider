@@ -236,9 +236,15 @@ var Slider = function () {
 
       this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
+<<<<<<< HEAD
 
       this.minHandler.addEventListener('touchstart', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('touchstart', this.controlmaxHandler.bind(this));
+=======
+	    this.minHandler.addEventListener('touchstart', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('touchstart', this.controlmaxHandler.bind(this));
+	    
+>>>>>>> 7633fb6ef4b0d9acaba59c67398b61549c7dacb1
     }
   }, {
     key: 'setAriaDefaults',
