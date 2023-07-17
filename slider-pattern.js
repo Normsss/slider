@@ -306,9 +306,11 @@ var Slider = function () {
 
       if (e.target === this.minHandler) {
         console.log("touch min");
+
         this.controlminHandler(e);
       } else {
         console.log("touch max");
+
         this.controlmaxHandler(e);
       }
     }
@@ -460,6 +462,9 @@ var Slider = function () {
       var min = parseInt(this.minHandler.value),
           max = parseInt(this.maxHandler.value);
 
+      e.preventDefault();
+      e.stopPropagation();
+
       this.fillSlider();
 
       if (max > min) {
@@ -483,6 +488,9 @@ var Slider = function () {
     value: function controlmaxHandler(e) {
       var min = parseInt(this.minHandler.value),
           max = parseInt(this.maxHandler.value);
+
+      e.preventDefault();
+      e.stopPropagation();
 
       this.fillSlider();
       this.setToggleAccessible(this.maxHandler);
