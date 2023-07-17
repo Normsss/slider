@@ -154,12 +154,12 @@ var Slider = function () {
       this.defineVariables();
       this.setCurrentBreakpoint();
       this.setLang();
+      this.setInitialValues();
       this.setEventListeners();
 
       this.el.classList.add(domSelectorInitialized);
 
       this.setAriaDefaults();
-      this.setInitialValues();
 
       this.fillSlider();
       this.setToggleAccessible(this.maxHandler);
@@ -188,8 +188,8 @@ var Slider = function () {
       this.maxInputLabelSpan = this.el.querySelector('.max-input-label');
       this.dataMinValue = this.el.getAttribute('data-min');
       this.dataMaxValue = this.el.getAttribute('data-max');
-      this.dataInitialMinValue = this.el.getAttribute('data-initial-min-value') || null;
-      this.dataInitialMaxValue = this.el.getAttribute('data-initial-max-value') || null;
+      this.dataInitialMinValue = this.el.getAttribute('data-initial-min-value');
+      this.dataInitialMaxValue = this.el.getAttribute('data-initial-max-value');
       this.minError = this.el.querySelector('.min-error');
       this.maxError = this.el.querySelector('.max-error');
       this.lang = '';
@@ -223,16 +223,22 @@ var Slider = function () {
       var _this = this;
 
       window.addEventListener('resize', this.onDocumentResize.bind(this));
+
       this.minHandler.addEventListener('click', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('click', this.controlmaxHandler.bind(this));
+
       this.inputs.forEach(function (input) {
         return input.addEventListener('keydown', _this.onInputKeydown.bind(_this));
       });
       this.inputs.forEach(function (input) {
         return input.addEventListener('keyup', _this.onInputKeyUp.bind(_this));
       });
+
       this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
+
+      this.minHandler.addEventListener('touchstart', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('touchstart', this.controlmaxHandler.bind(this));
     }
   }, {
     key: 'setAriaDefaults',
@@ -257,40 +263,38 @@ var Slider = function () {
     value: function setInitialValues() {
       var _this2 = this;
 
-      this.maximum = parseInt(this.dataMaxValue);
-      this.minimum = parseInt(this.dataMinValue);
+      var minimumInitial = parseInt(this.dataInitialMinValue),
+          maximumInitial = parseInt(this.dataInitialMaxValue);
 
-      this.minimumInitial = parseInt(this.dataMinValue);
-      this.maximumInitial = parseInt(this.dataMaxValue);
-
-      if (this.dataInitialMaxValue) {
-        this.maximumInitial = parseInt(this.dataInitialMaxValue);
+      if (isNaN(minimumInitial)) {
+        minimumInitial = this.dataMinValue;
       }
-      if (this.dataInitialMinValue) {
-        this.minimumInitial = parseInt(this.dataInitialMinValue);
+      if (isNaN(maximumInitial)) {
+        maximumInitial = this.dataMaxValue;
       }
 
-      this.minHandler.value = this.minimumInitial;
-      this.minHandler.min = this.minimum;
-      this.minHandler.max = this.maximum;
+      this.minHandler.min = this.dataMinValue;
+      this.minHandler.max = this.dataMaxValue;
 
-      this.maxHandler.value = this.maximumInitial;
-      this.maxHandler.min = this.minimum;
-      this.maxHandler.max = this.maximum;
+      this.maxHandler.min = this.dataMinValue;
+      this.maxHandler.max = this.dataMaxValue;
 
-      this.minInput.value = this.minimumInitial;
-      this.minInput.min = this.minimum;
-      this.minInput.max = this.maximum;
+      this.minInput.value = minimumInitial;
+      this.minInput.min = this.dataMinValue;
+      this.minInput.max = this.dataMaxValue;
 
-      this.maxInput.value = this.maximumInitial;
-      this.maxInput.min = this.minimum;
-      this.maxInput.max = this.maximum;
+      this.maxInput.value = maximumInitial;
+      this.maxInput.min = this.dataMinValue;
+      this.maxInput.max = this.dataMaxValue;
 
-      this.minInputLabelSpan.innerText = this.minimum;
-      this.maxInputLabelSpan.innerText = this.maximum;
+      this.minHandler.value = minimumInitial;
+      this.maxHandler.value = maximumInitial;
 
-      this.minHandlerLabelSpan.innerText = this.minimumInitial;
-      this.maxHandlerLabelSpan.innerText = this.maximumInitial;
+      this.minInputLabelSpan.innerText = this.dataMinValue;
+      this.maxInputLabelSpan.innerText = this.dataMaxValue;
+
+      this.minHandlerLabelSpan.innerText = minimumInitial;
+      this.maxHandlerLabelSpan.innerText = maximumInitial;
 
       this.inputs.forEach(function (input) {
         return _this2.applyInputMask(input);
@@ -299,30 +303,14 @@ var Slider = function () {
   }, {
     key: 'onInputKeyUp',
     value: function onInputKeyUp(e) {
-      var key = e.which || e.keyCode;
-      //backspace
-      if (key === 8) {
-        this.preventErasingSymbol(e);
-      } else {
-        return;
-      }
-    }
-  }, {
-    key: 'onInputKeydown',
-    value: function onInputKeydown(e) {
       var _this3 = this;
 
       var key = e.which || e.keyCode;
       switch (key) {
         case 8:
           //backspace
-          //this.preventErasingSymbol(e);
-          if (e.target.value.length < 2) {
-            this.resetSlider(e);
-            this.applyInputMask(e.target);
-          } else {
-            return;
-          }
+          this.preventErasingSymbol(e);
+
           return;
         case 9:
           // tab
@@ -340,6 +328,22 @@ var Slider = function () {
               _this3.controlmaxInput(e);
             }
           }, 0);
+      }
+    }
+  }, {
+    key: 'onInputKeydown',
+    value: function onInputKeydown(e) {
+      var key = e.which || e.keyCode;
+      //backspace
+      if (key === 8) {
+        if (e.target.value.length < 2) {
+          this.resetSlider(e);
+          this.applyInputMask(e.target);
+        } else {
+          return;
+        }
+      } else {
+        return;
       }
     }
   }, {
