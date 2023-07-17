@@ -303,7 +303,14 @@ var Slider = function () {
   }, {
     key: 'onTouchEvents',
     value: function onTouchEvents(e) {
-      console.log("touch");
+
+      if (e.target === this.minHandler) {
+        console.log("touch min");
+        this.controlminHandler(e);
+      } else {
+        console.log("touch max");
+        this.controlmaxHandler(e);
+      }
     }
   }, {
     key: 'onInputKeyUp',
