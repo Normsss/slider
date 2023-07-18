@@ -197,7 +197,7 @@ var Slider = function () {
       this.sliderOutputContainer = this.el.querySelector('.' + domSelector + '__output-container');
       this.sliderColor = '#878F9B';
       this.rangeColor = '#003B71';
-      this.ds2LayoutBreakpoint = 375; //$mobile
+      this.ds2LayoutBreakpoint = 393; //$mobile
       this.currentDS2Breakpoint = 'mobile';
       this.shouldMoveLabels = false;
     }

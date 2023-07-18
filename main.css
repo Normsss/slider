@@ -12435,7 +12435,7 @@ input[type=radio][disabled]:checked::before {
           margin: 0 5px; } }
       @media only screen and (max-width: 299px) {
         .slider .slider__inputs span {
-          margin: 0 -1px; } }
+          margin: 0 -2px; } }
   .slider .sliders_control {
     position: relative;
     min-height: 23px;
@@ -12460,10 +12460,11 @@ input[type=radio][disabled]:checked::before {
         .slider .sliders_control .slider__min-handler:focus-visible::-webkit-slider-thumb,
         .slider .sliders_control .slider__max-handler:focus-visible::-webkit-slider-thumb {
           outline: auto;
-          outline-offset: 2px; }
+          outline-offset: 10px; }
         .slider .sliders_control .slider__min-handler:focus-visible::-moz-range-thumb,
         .slider .sliders_control .slider__max-handler:focus-visible::-moz-range-thumb {
-          outline: auto; }
+          outline: auto;
+          outline-offset: 10px; }
       .slider .sliders_control .slider__min-handler.slider__min-handler,
       .slider .sliders_control .slider__max-handler.slider__min-handler {
         height: 0px;
@@ -12499,8 +12500,8 @@ input[type=radio][disabled]:checked::before {
     color: #0D1C3D;
     height: 70px; }
     .slider .slider__outputs .slider__output-container {
-      width: 41%; }
-      @media screen and (min-width: 768px) {
+      width: 50%; }
+      @media only screen and (min-width: 393px) {
         .slider .slider__outputs .slider__output-container {
           width: 25%; } }
       .slider .slider__outputs .slider__output-container.min-label-div {
@@ -12508,7 +12509,11 @@ input[type=radio][disabled]:checked::before {
         left: 0%; }
       .slider .slider__outputs .slider__output-container.max-label-div {
         position: absolute;
-        right: 0%; }
+        right: 0%;
+        text-align: end; }
+        @media only screen and (min-width: 393px) {
+          .slider .slider__outputs .slider__output-container.max-label-div {
+            text-align: initial; } }
   .slider .error-message-wrapper {
     display: flex;
     width: 100%; }
@@ -12518,4 +12523,4 @@ input[type=radio][disabled]:checked::before {
         margin-left: 26px; }
 
 .pl-slider-pattern-version:before {
-  content: "1.0.21"; }
+  content: "1.0.22"; }
