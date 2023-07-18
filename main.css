@@ -12498,12 +12498,17 @@ input[type=radio][disabled]:checked::before {
     font-size: 24px;
     color: #0D1C3D;
     height: 70px; }
-    .slider .slider__outputs .slider__output-container.min-label-div {
-      position: absolute;
-      left: 0%; }
-    .slider .slider__outputs .slider__output-container.max-label-div {
-      position: absolute;
-      right: 0%; }
+    .slider .slider__outputs .slider__output-container {
+      width: 41%; }
+      @media screen and (min-width: 768px) {
+        .slider .slider__outputs .slider__output-container {
+          width: 25%; } }
+      .slider .slider__outputs .slider__output-container.min-label-div {
+        position: absolute;
+        left: 0%; }
+      .slider .slider__outputs .slider__output-container.max-label-div {
+        position: absolute;
+        right: 0%; }
   .slider .error-message-wrapper {
     display: flex;
     width: 100%; }
