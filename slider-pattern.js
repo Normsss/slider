@@ -197,7 +197,7 @@ var Slider = function () {
       this.sliderOutputContainer = this.el.querySelector('.' + domSelector + '__output-container');
       this.sliderColor = '#878F9B';
       this.rangeColor = '#003B71';
-      this.ds2LayoutBreakpoint = 394; //$mobile
+      this.ds2LayoutBreakpoint = 375; //$mobile
       this.currentDS2Breakpoint = 'mobile';
       this.shouldMoveLabels = false;
     }
@@ -236,9 +236,6 @@ var Slider = function () {
 
       this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
-
-      this.minHandler.addEventListener('swipe', this.onTouchEvents.bind(this));
-      this.maxHandler.addEventListener('swipe', this.onTouchEvents.bind(this));
     }
   }, {
     key: 'setAriaDefaults',
@@ -576,9 +573,9 @@ var Slider = function () {
       if (this.shouldMoveLabels) {
         if (!label) {
           // if( maxpix - minpix < outputrange){
-          this.maxHandlerLabelDiv.style.left = maxpix - 3 + '%';
+          this.maxHandlerLabelDiv.style.left = 'unset';
           // this.maxHandlerLabelDiv.style.textAlign = "end"
-          this.minHandlerLabelDiv.style.left = minpix + '%';
+          this.minHandlerLabelDiv.style.left = 'unset';
           // } else if (maxpix < 100 - outputrange*2){
           //   this.minHandlerLabelDiv.style.left = `${minpix}%`;
           // }
@@ -593,7 +590,7 @@ var Slider = function () {
           }
         }
       } else {
-        this.maxHandlerLabelDiv.style.left = 100 - outputrange + '%';
+        this.maxHandlerLabelDiv.style.left = 'unset';
         this.minHandlerLabelDiv.style.left = '0%';
       }
     }
@@ -629,14 +626,13 @@ var Slider = function () {
         this.currentDS2Breakpoint = 'mobile';
         this.shouldMoveLabels = false;
       }
-      console.log(this.shouldMoveLabels);
+      console.log(this.shouldMoveLabels + " " + this.currentDS2Breakpoint);
     }
   }, {
     key: 'onDocumentResize',
     value: function onDocumentResize() {
       this.setCurrentBreakpoint();
-      this.updateLabelPosition('min');
-      this.updateLabelPosition('max');
+      this.updateLabelPosition();
     }
   }]);
 
