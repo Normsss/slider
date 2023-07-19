@@ -470,7 +470,7 @@ var Slider = function () {
       if (max > min) {
         this.minInput.value = min;
         this.minHandlerLabelSpan.innerText = min;
-
+        this.minHandler.setAttribute('aria-valuetext', `$${min}`)
         this.hideError(e, this.minInput.id);
         this.applyInputMask(this.minInput);
       } else {
