@@ -234,8 +234,8 @@ var Slider = function () {
         return input.addEventListener('keyup', _this.onInputKeyUp.bind(_this));
       });
 
-      this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
-      this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
+      this.minHandler.addEventListener('change', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('change', this.controlmaxHandler.bind(this));
     }
   }, {
     key: 'setAriaDefaults',
