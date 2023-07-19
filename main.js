@@ -236,6 +236,9 @@ var Slider = function () {
 
       this.minHandler.addEventListener('change', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('change', this.controlmaxHandler.bind(this));
+
+      this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
     }
   }, {
     key: 'setAriaDefaults',
@@ -495,6 +498,7 @@ var Slider = function () {
         this.maxHandler.value = max;
         this.maxInput.value = max;
         this.maxHandlerLabelSpan.innerText = max;
+        this.maxHandler.setAttribute('aria-valuetext', `$${max}`)
         this.hideError(e, this.maxInput.id);
       } else {
         this.maxInput.value = min;
