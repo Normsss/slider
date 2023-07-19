@@ -12460,9 +12460,20 @@ input[type=radio][disabled]:checked::before {
         .slider .sliders_control .slider__min-handler:focus-visible::-webkit-slider-thumb,
         .slider .sliders_control .slider__max-handler:focus-visible::-webkit-slider-thumb {
           outline: auto;
-          outline-offset: 10px; }
+          outline-offset: 1px; }
         .slider .sliders_control .slider__min-handler:focus-visible::-moz-range-thumb,
         .slider .sliders_control .slider__max-handler:focus-visible::-moz-range-thumb {
+          outline: auto;
+          outline-offset: 10px; }
+      .slider .sliders_control .slider__min-handler:active,
+      .slider .sliders_control .slider__max-handler:active {
+        outline: none; }
+        .slider .sliders_control .slider__min-handler:active::-webkit-slider-thumb,
+        .slider .sliders_control .slider__max-handler:active::-webkit-slider-thumb {
+          outline: auto;
+          outline-offset: 1px; }
+        .slider .sliders_control .slider__min-handler:active::-moz-range-thumb,
+        .slider .sliders_control .slider__max-handler:active::-moz-range-thumb {
           outline: auto;
           outline-offset: 10px; }
       .slider .sliders_control .slider__min-handler.slider__min-handler,
@@ -12503,6 +12514,9 @@ input[type=radio][disabled]:checked::before {
       width: 50%; }
       @media only screen and (min-width: 393px) {
         .slider .slider__outputs .slider__output-container {
+          width: 30%; } }
+      @media only screen and (min-width: 444px) {
+        .slider .slider__outputs .slider__output-container {
           width: 25%; } }
       .slider .slider__outputs .slider__output-container.min-label-div {
         position: absolute;
@@ -12511,7 +12525,7 @@ input[type=radio][disabled]:checked::before {
         position: absolute;
         right: 0%;
         text-align: end; }
-        @media only screen and (min-width: 393px) {
+        @media only screen and (min-width: 428px) {
           .slider .slider__outputs .slider__output-container.max-label-div {
             text-align: initial; } }
   .slider .error-message-wrapper {
