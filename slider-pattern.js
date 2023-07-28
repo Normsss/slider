@@ -192,6 +192,7 @@ var Slider = function () {
       this.dataInitialMaxValue = this.el.getAttribute('data-initial-max-value');
       this.minError = this.el.querySelector('.min-error');
       this.maxError = this.el.querySelector('.max-error');
+      this.inputsScreenReaderSpan = this.el.querySelector('.' + domSelector + '__min-max');
       this.lang = '';
       this.sliderWidth = this.el.offsetWidth;
       this.sliderOutputContainer = this.el.querySelector('.' + domSelector + '__output-container');
@@ -234,6 +235,9 @@ var Slider = function () {
         return input.addEventListener('keyup', _this.onInputKeyUp.bind(_this));
       });
 
+      this.minHandler.addEventListener('change', this.controlminHandler.bind(this));
+      this.maxHandler.addEventListener('change', this.controlmaxHandler.bind(this));
+
       this.minHandler.addEventListener('input', this.controlminHandler.bind(this));
       this.maxHandler.addEventListener('input', this.controlmaxHandler.bind(this));
     }
@@ -252,8 +256,15 @@ var Slider = function () {
       this.maxHandler.setAttribute('id', this.elId + '__maxHandler');
       this.maxHandlerLabel.setAttribute('for', this.elId + '__maxHandler');
 
+      this.minHandler.setAttribute('aria-describedby', this.elId + '__min-max');
+      this.maxHandler.setAttribute('aria-describedby', this.elId + '__min-max');
+      this.minInput.setAttribute('aria-describedby', this.elId + '__min-max');
+      this.maxInput.setAttribute('aria-describedby', this.elId + '__min-max');
+
       this.minError.setAttribute('id', this.minInput.id + '__error');
       this.maxError.setAttribute('id', this.maxInput.id + '__error');
+
+      this.inputsScreenReaderSpan.setAttribute('id', this.elId + '__min-max');
     }
   }, {
     key: 'setInitialValues',
@@ -277,12 +288,7 @@ var Slider = function () {
       this.maxHandler.max = this.dataMaxValue;
 
       this.minInput.value = minimumInitial;
-      this.minInput.min = this.dataMinValue;
-      this.minInput.max = this.dataMaxValue;
-
       this.maxInput.value = maximumInitial;
-      this.maxInput.min = this.dataMinValue;
-      this.maxInput.max = this.dataMaxValue;
 
       this.minHandler.value = minimumInitial;
       this.maxHandler.value = maximumInitial;
@@ -296,20 +302,8 @@ var Slider = function () {
       this.inputs.forEach(function (input) {
         return _this2.applyInputMask(input);
       });
-    }
-  }, {
-    key: 'onTouchEvents',
-    value: function onTouchEvents(e) {
 
-      if (e.target === this.minHandler) {
-        console.log("touch min");
-
-        this.controlminHandler(e);
-      } else {
-        console.log("touch max");
-
-        this.controlmaxHandler(e);
-      }
+      this.inputsScreenReaderSpan.innerText = 'Minimum value ' + this.dataMinValue + '. Maximum value ' + this.dataMaxValue;
     }
   }, {
     key: 'onInputKeyUp',
@@ -394,6 +388,8 @@ var Slider = function () {
   }, {
     key: 'controlminInput',
     value: function controlminInput(e) {
+      var _this4 = this;
+
       var min = parseFloat(this.minInput.value.replace(/[^0-9]/g, "")),
           max = parseFloat(this.maxInput.value.replace(/[^0-9]/g, ""));
 
@@ -409,7 +405,9 @@ var Slider = function () {
         this.minHandler.value = min;
         this.minInput.value = '$' + min;
         this.minHandlerLabelSpan.innerText = min;
-        this.hideError(e, this.minInput.id);
+        this.inputs.forEach(function (input) {
+          return _this4.hideError(e, input.id);
+        });
         this.fillSlider();
       }
       this.updateLabelPosition('min');
@@ -423,6 +421,8 @@ var Slider = function () {
   }, {
     key: 'controlmaxInput',
     value: function controlmaxInput(e) {
+      var _this5 = this;
+
       var min = parseInt(this.minInput.value.replace(/[^0-9]/g, "")),
           max = parseInt(this.maxInput.value.replace(/[^0-9]/g, ""));
 
@@ -432,7 +432,9 @@ var Slider = function () {
         this.maxHandlerLabelSpan.innerText = max;
         this.maxInput.value = '$' + max;
         this.fillSlider();
-        this.hideError(e, this.maxInput.id);
+        this.inputs.forEach(function (input) {
+          return _this5.hideError(e, input.id);
+        });
       } else if (this.maxInput.value === "") {
         this.resetSlider(e);
       } else {
@@ -467,7 +469,7 @@ var Slider = function () {
       if (max > min) {
         this.minInput.value = min;
         this.minHandlerLabelSpan.innerText = min;
-
+        this.minHandler.setAttribute('aria-valuetext', '$' + min); //announces on VO-IOS
         this.hideError(e, this.minInput.id);
         this.applyInputMask(this.minInput);
       } else {
@@ -495,6 +497,7 @@ var Slider = function () {
         this.maxHandler.value = max;
         this.maxInput.value = max;
         this.maxHandlerLabelSpan.innerText = max;
+        this.maxHandler.setAttribute('aria-valuetext', '$' + max); //announces on VO-IOS
         this.hideError(e, this.maxInput.id);
       } else {
         this.maxInput.value = min;
@@ -510,16 +513,20 @@ var Slider = function () {
       var errorDescription = this.el.querySelector('#' + errId + '__error');
 
       if (e.target.type === 'text') {
-        e.target.classList.remove("error-field");
+        this.inputs.forEach(function (input) {
+          return input.classList.remove("error-field");
+        });
         errorDescription.innerHTML = "";
       } else if (e.target.type === 'range') {
         //error from handlers
         if (e.target.classList.contains('slider__min-handler')) {
           this.minInput.classList.remove("error-field");
           errorDescription.innerHTML = "";
+          this.minInput.setAttribute('aria-describedby', this.elId + '__min-max');
         } else {
           this.maxInput.classList.remove("error-field");
           errorDescription.innerHTML = "";
+          this.maxInput.setAttribute('aria-describedby', this.elId + '__min-max');
         }
       }
     }
@@ -532,14 +539,21 @@ var Slider = function () {
       if (e.target.type === 'text') {
         e.target.classList.add("error-field");
         errorDescription.innerHTML = "<ul id='" + errUlId + "' role='presentation'><li><span class='inline-error-icon' aria-hidden='true'>!</span><span class='screenreader-only'>Error: </span>message for  " + errId + " </li></ul>";
+        if (e.target.classList.contains('slider__min-input')) {
+          this.minInput.setAttribute('aria-describedby', '' + errUlId + ' ' + this.elId + '__min-max');
+        } else if (e.target.classList.contains('slider__max-input')) {
+          this.maxInput.setAttribute('aria-describedby', '' + errUlId + ' ' + this.elId + '__min-max');
+        }
       } else if (e.target.type === 'range') {
         //error from handlers
         if (e.target.classList.contains('slider__min-handler')) {
           this.minInput.classList.add("error-field");
           errorDescription.innerHTML = "<ul id='" + errUlId + "' role='presentation'><li><span class='inline-error-icon' aria-hidden='true'>!</span><span class='screenreader-only'>Error: </span>message for  " + errId + " </li></ul>";
+          this.minInput.setAttribute('aria-describedby', '' + errUlId + ' ' + this.elId + '__min-max');
         } else {
           this.maxInput.classList.add("error-field");
           errorDescription.innerHTML = "<ul id='" + errUlId + "' role='presentation'><li><span class='inline-error-icon' aria-hidden='true'>!</span><span class='screenreader-only'>Error: </span>message for  " + errId + " </li></ul>";
+          this.maxInput.setAttribute('aria-describedby', '' + errUlId + ' ' + this.elId + '__min-max');
         }
       }
     }

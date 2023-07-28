@@ -34,29 +34,34 @@
           <fieldset class="slider__fieldset">
             <legend class="p2 -medium">Individual deductible</legend>
             <div class="sliders_control">
-                <input class="slider__min-handler"  type="range"/>
-                <input class="slider__max-handler"  type="range"/>
+                <input class="slider__min-handler" step="1" type="range"/>
+                <input class="slider__max-handler"  step="1" type="range"/>
+                <span class="screenreader-only slider__min-max" aria-hidden="true"></span>
             </div>
             <div class="slider__outputs">
               <div class="slider__output-container min-label-div">
-                  <label  class="slider__handler-min-label p4">Minimum cost:<p>($<span class="min-cost"></span>)</p></label>
+                  <label  class="slider__handler-min-label p4">Minimum cost:<p aria-hidden="true">($<span class="min-cost"></span>)</p></label>
               </div>
               <div class="slider__output-container max-label-div">
-                  <label  class="slider__handler-max-label p4" >Maximum cost:<p>($<span class="max-cost"></span>)</p></label>
+                  <label  class="slider__handler-max-label p4" >Maximum cost:<p aria-hidden="true">($<span class="max-cost"></span>)</p></label>
               </div>
             </div>
             <div class="form-group slider__inputs">
               <span class="screenreader-only"> Use numbers</span>
-              <label  class="slider__input-min-label inline">Minimum cost ($<span class="min-input-label"></span>)</label>
-              <label  class="slider__input-max-label inline" >Maximum cost ($<span class="max-input-label"></span>)</label>
-              <br>
-              <input  name="minInput" class="slider__min-input slider__input" type="text" placeholder="$0" required>
-              <span>to</span>
-              <input  name="maxInput" class="slider__max-input slider__input" type="text" placeholder="$0" required>
-              <div class="error-message-wrapper">
-                <div class="error-description min-error"></div>
-                <div class="error-description max-error"></div>
+              <div class="input-wrapper">
+                <label  class="slider__input-min-label inline">Minimum cost ($<span aria-hidden="true" class="min-input-label"></span>)</label>
+                <input  name="minInput" class="slider__min-input slider__input" type="text" placeholder="$0" required>
               </div>
+              <span>to</span>
+              <div class="input-wrapper">
+                <label  class="slider__input-max-label inline" >Maximum cost ($<span aria-hidden="true" class="max-input-label"></span>)</label>
+                <input  name="maxInput" class="slider__max-input slider__input" type="text" placeholder="$0" required>
+              </div>
+              
+            </div>
+            <div class="error-message-wrapper">
+              <div class="error-description min-error"></div>
+              <div class="error-description max-error"></div>
             </div>
           </fieldset>
         </div>

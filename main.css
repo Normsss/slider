@@ -12382,22 +12382,19 @@ input[type=radio][disabled]:checked::before {
     padding: 0px;
     margin: 0px; }
   .slider .slider__inputs {
-    max-width: 100%; }
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-between; }
     @media only screen and (max-width: 299px) {
       .slider .slider__inputs {
         margin-top: 25px; } }
-    .slider .slider__inputs .slider__min-input,
-    .slider .slider__inputs .slider__max-input {
-      max-width: 43%; }
-      @media screen and (min-width: 768px) {
-        .slider .slider__inputs .slider__min-input,
-        .slider .slider__inputs .slider__max-input {
-          max-width: 46%; } }
-      @media only screen and (max-width: 299px) {
-        .slider .slider__inputs .slider__min-input,
-        .slider .slider__inputs .slider__max-input {
-          margin: 0px;
-          max-width: 41%; } }
+    @media only screen and (max-width: 299px) {
+      .slider .slider__inputs .slider__min-input,
+      .slider .slider__inputs .slider__max-input {
+        margin: 0px; } }
     .slider .slider__inputs .slider__input-min-label,
     .slider .slider__inputs .slider__input-max-label {
       font-family: "Gotham 5r", Verdana;
@@ -12408,34 +12405,12 @@ input[type=radio][disabled]:checked::before {
       font-weight: 350;
       font-size: 14px;
       line-height: 20px; }
-      .slider .slider__inputs .slider__input-min-label.inline,
-      .slider .slider__inputs .slider__input-max-label.inline {
-        display: inline-block;
-        width: 46%; }
-      .slider .slider__inputs .slider__input-min-label.slider__input-max-label,
-      .slider .slider__inputs .slider__input-max-label.slider__input-max-label {
-        width: 46%;
-        margin-left: 4%; }
-        @media screen and (min-width: 768px) {
-          .slider .slider__inputs .slider__input-min-label.slider__input-max-label,
-          .slider .slider__inputs .slider__input-max-label.slider__input-max-label {
-            margin-left: 6%; } }
-        @media only screen and (max-width: 299px) {
-          .slider .slider__inputs .slider__input-min-label.slider__input-max-label,
-          .slider .slider__inputs .slider__input-max-label.slider__input-max-label {
-            margin-left: 2%; } }
       .slider .slider__inputs .slider__input-min-label span,
       .slider .slider__inputs .slider__input-max-label span {
         margin: 0px; }
     .slider .slider__inputs span {
-      margin: 0px;
+      margin: auto;
       max-width: 100%; }
-      @media screen and (min-width: 768px) {
-        .slider .slider__inputs span {
-          margin: 0 5px; } }
-      @media only screen and (max-width: 299px) {
-        .slider .slider__inputs span {
-          margin: 0 -2px; } }
   .slider .sliders_control {
     position: relative;
     min-height: 23px;
@@ -12517,7 +12492,7 @@ input[type=radio][disabled]:checked::before {
           width: 30%; } }
       @media only screen and (min-width: 444px) {
         .slider .slider__outputs .slider__output-container {
-          width: 25%; } }
+          width: 27%; } }
       .slider .slider__outputs .slider__output-container.min-label-div {
         position: absolute;
         left: 0%; }
@@ -12537,4 +12512,4 @@ input[type=radio][disabled]:checked::before {
         margin-left: 26px; }
 
 .pl-slider-pattern-version:before {
-  content: "1.0.22"; }
+  content: "1.0.23"; }
